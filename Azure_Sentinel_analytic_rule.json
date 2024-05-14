@@ -8,19 +8,19 @@
     },
     "resources": [
         {
-            "id": "[concat(resourceId('Microsoft.OperationalInsights/workspaces/providers', parameters('workspace'), 'Microsoft.SecurityInsights'),'/alertRules/dd960141-4d0c-4839-b699-4e9581686df6')]",
-            "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/dd960141-4d0c-4839-b699-4e9581686df6')]",
+            "id": "[concat(resourceId('Microsoft.OperationalInsights/workspaces/providers', parameters('workspace'), 'Microsoft.SecurityInsights'),'/alertRules/0ebe5540-bee7-49d6-b7c0-ca280a2ca0d8')]",
+            "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/0ebe5540-bee7-49d6-b7c0-ca280a2ca0d8')]",
             "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
             "kind": "Scheduled",
             "apiVersion": "2023-12-01-preview",
             "properties": {
-                "displayName": "SignIn logs - Custom - Delete - Exclusion of North Carolina",
-                "description": "SignIn logs - Custom - Delete - Exclusion of North Carolina",
+                "displayName": "NFCU - Custom Rule",
+                "description": "",
                 "severity": "Medium",
                 "enabled": false,
-                "query": "SigninLogs\r\n| where LocationDetails.city != \"Cary\" or  LocationDetails.state != \"North Carolina\" \r\n| project  Location, LocationDetails.city, LocationDetails.state, LocationDetails.countryOrRegion, IPAddress, ConditionalAccessStatus, Identity",
-                "queryFrequency": "PT5M",
-                "queryPeriod": "PT5M",
+                "query": "Heartbeat\r\n| project TimeGenerated, Computer, ComputerIP\r\n| take 5",
+                "queryFrequency": "PT5H",
+                "queryPeriod": "PT5H",
                 "triggerOperator": "GreaterThan",
                 "triggerThreshold": 0,
                 "suppressionDuration": "PT5H",
@@ -45,32 +45,19 @@
                     "aggregationKind": "SingleAlert"
                 },
                 "alertDetailsOverride": null,
-                "customDetails": {},
+                "customDetails": null,
                 "entityMappings": [
                     {
-                        "entityType": "IP",
+                        "entityType": "Host",
                         "fieldMappings": [
                             {
-                                "identifier": "Address",
-                                "columnName": "IPAddress"
-                            }
-                        ]
-                    },
-                    {
-                        "entityType": "Account",
-                        "fieldMappings": [
-                            {
-                                "identifier": "Name",
-                                "columnName": "Identity"
+                                "identifier": "FullName",
+                                "columnName": "Computer"
                             }
                         ]
                     }
                 ],
-                "sentinelEntitiesMappings": [
-                    {
-                        "columnName": "Location"
-                    }
-                ],
+                "sentinelEntitiesMappings": null,
                 "templateVersion": null,
                 "subTechniques": []
             }
