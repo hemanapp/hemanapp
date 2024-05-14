@@ -1,0 +1,79 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "workspace": {
+            "type": "String"
+        }
+    },
+    "resources": [
+        {
+            "id": "[concat(resourceId('Microsoft.OperationalInsights/workspaces/providers', parameters('workspace'), 'Microsoft.SecurityInsights'),'/alertRules/dd960141-4d0c-4839-b699-4e9581686df6')]",
+            "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/dd960141-4d0c-4839-b699-4e9581686df6')]",
+            "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
+            "kind": "Scheduled",
+            "apiVersion": "2023-12-01-preview",
+            "properties": {
+                "displayName": "SignIn logs - Custom - Delete - Exclusion of North Carolina",
+                "description": "SignIn logs - Custom - Delete - Exclusion of North Carolina",
+                "severity": "Medium",
+                "enabled": false,
+                "query": "SigninLogs\r\n| where LocationDetails.city != \"Cary\" or  LocationDetails.state != \"North Carolina\" \r\n| project  Location, LocationDetails.city, LocationDetails.state, LocationDetails.countryOrRegion, IPAddress, ConditionalAccessStatus, Identity",
+                "queryFrequency": "PT5M",
+                "queryPeriod": "PT5M",
+                "triggerOperator": "GreaterThan",
+                "triggerThreshold": 0,
+                "suppressionDuration": "PT5H",
+                "suppressionEnabled": false,
+                "startTimeUtc": null,
+                "tactics": [],
+                "techniques": [],
+                "alertRuleTemplateName": null,
+                "incidentConfiguration": {
+                    "createIncident": true,
+                    "groupingConfiguration": {
+                        "enabled": false,
+                        "reopenClosedIncident": false,
+                        "lookbackDuration": "PT5H",
+                        "matchingMethod": "AllEntities",
+                        "groupByEntities": [],
+                        "groupByAlertDetails": [],
+                        "groupByCustomDetails": []
+                    }
+                },
+                "eventGroupingSettings": {
+                    "aggregationKind": "SingleAlert"
+                },
+                "alertDetailsOverride": null,
+                "customDetails": {},
+                "entityMappings": [
+                    {
+                        "entityType": "IP",
+                        "fieldMappings": [
+                            {
+                                "identifier": "Address",
+                                "columnName": "IPAddress"
+                            }
+                        ]
+                    },
+                    {
+                        "entityType": "Account",
+                        "fieldMappings": [
+                            {
+                                "identifier": "Name",
+                                "columnName": "Identity"
+                            }
+                        ]
+                    }
+                ],
+                "sentinelEntitiesMappings": [
+                    {
+                        "columnName": "Location"
+                    }
+                ],
+                "templateVersion": null,
+                "subTechniques": []
+            }
+        }
+    ]
+}
