@@ -13,7 +13,7 @@
             "type": "Microsoft.OperationalInsights/workspaces/providers/AutomationRules",
             "apiVersion": "2024-04-01-preview",
             "properties": {
-                "displayName": "Test",
+                "displayName": "Test1",
                 "order": 1,
                 "triggeringLogic": {
                     "isEnabled": false,
