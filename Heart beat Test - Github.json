@@ -17,7 +17,7 @@
                 "displayName": "HeartBeat Test",
                 "description": "",
                 "severity": "Informational",
-                "enabled": false,
+                "enabled": True,
                 "query": "Heartbeat\r\n| where Computer == \"AZ-WIN2019-B2\"\r\n",
                 "queryFrequency": "PT5M",
                 "queryPeriod": "PT5M",
